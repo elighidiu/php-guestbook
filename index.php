@@ -20,13 +20,23 @@ require "include/formvalidator.php";
 if(isset($_POST["submit"])){
     $test = new userValidator($_POST["title"], $_POST["date"], $_POST["content"], $_POST["author"]);
 
-   // var_dump($test);
+   
     $test->validateAll();
     var_dump($test->getErrors());
     var_dump($test->getTitle());
     var_dump($test->getDate());
     var_dump($test->getContent());
     var_dump($test->getAuthor());
+
+    if(file_exists("messages.json")){
+        var_dump($test);
+        $inp = file_get_contents("messages.json");
+        $tempArray = json_decode($inp);
+        array_push($tempArray, $test);
+        var_dump($tempArray);
+        $jsonData = json_encode($tempArray);
+        file_put_contents("messages.json", $jsonData);
+    }
 
 }
 ?>
@@ -78,6 +88,18 @@ if(isset($_POST["submit"])){
         <button type="submit" class="btn" name="submit" value="append">Post message!</button>
     </form>
 
+    <?php 
+         $inp = file_get_contents("messages.json");
+         $tempArray = json_decode($inp);
+
+         foreach($tempArray as $message){
+             echo "</br>" .$message->title;
+             echo "</br>" .$message->date;            
+             echo "</br>" .$message->content;            
+             echo "</br>" .$message->author;
+             echo "<hr>";
+         }
+    ?>
 
     <?php require ("view/footer.php") ?>
 </body>

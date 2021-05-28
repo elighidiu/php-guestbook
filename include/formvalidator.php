@@ -1,9 +1,9 @@
 <?php
-    class userValidator {
-        private string $title; 
-        private string $date;
-        private string $content;
-        private string $author;
+    class userValidator implements \JsonSerializable {
+        private $title; 
+        private $date;
+        private $content;
+        private $author;
         private $errors = [];
 
         function __construct($title, $date, $content, $author){
@@ -14,7 +14,13 @@
 
         }
 
-        
+        public function jsonSerialize()
+        {
+            $vars = get_object_vars($this);
+    
+            return $vars;
+        }
+
         public function validateTitle (){
             if (empty($this->title)) {
                $this->addError("title", "Title is required");
