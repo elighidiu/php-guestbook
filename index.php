@@ -1,18 +1,3 @@
-<!--  
-- Separate HTML & PHP code
-- Write your footer and header HTML code and require() them in your template files in separate files to avoid repeating HTML code 
-- A user is displayed a form, which he or she must fill out.
-- A confirmation message is displayed to the user when the comment is saved in the database.
-- A user can browse through all the comments posted till now on the website. 
-- Validation FORM 
-- Store the message 
-- Posts must have the following attributes:
-        - Title
-        - Date
-        - Content
-        - Author name
-
--->
 <?php
 
 require "include/formvalidator.php";
@@ -20,13 +5,12 @@ require "include/formvalidator.php";
 if(isset($_POST["submit"])){
     $test = new userValidator($_POST["title"], $_POST["date"], $_POST["content"], $_POST["author"]);
 
-   
-    $test->validateAll();
-    var_dump($test->getErrors());
-    var_dump($test->getTitle());
-    var_dump($test->getDate());
-    var_dump($test->getContent());
-    var_dump($test->getAuthor());
+   print_r($test->validateAll());
+    // var_dump($test->getErrors());
+    // var_dump($test->getTitle());
+    // var_dump($test->getDate());
+    // var_dump($test->getContent());
+    // var_dump($test->getAuthor());
 
     if(file_exists("messages.json")){
         var_dump($test);
@@ -89,22 +73,21 @@ if(isset($_POST["submit"])){
     </form>
 
     <?php 
-    // I have changed the code below into OOP 
-       /*  $inp = file_get_contents("messages.json");
+    
+        $inp = file_get_contents("messages.json");
          $tempArray = json_decode($inp);
 
-         foreach($tempArray as $message){
+         foreach(array_slice(array_reverse($tempArray), 0, 19) as $message){
              echo "</br>" .$message->title;
              echo "</br>" .$message->date;            
              echo "</br>" .$message->content;            
              echo "</br>" .$message->author;
              echo "<hr>";
          }
-         */ 
+         
+        // $guestbook = new Guestbook;
+        // $guestbook->showMessages();
 
-        $guestbook = new Guestbook;
-        $guestbook->showMessages();
-        
     ?>
 
     <?php require ("view/footer.php") ?>

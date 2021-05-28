@@ -69,7 +69,7 @@
         }
 
          /**
-         * Get the value of title
+         * Get the value of title, date, content, author and errors
          */ 
         public function getTitle()
         {
@@ -94,9 +94,10 @@
 
     }
 
-    class Guestbook{
+// It's not working well at this point. I have to see why is duplicating my entries on refresh
+
+    /* class Guestbook {
         public $file="messages.json";
-        public array $content;
 
         public function showMessages(){
             $inp = file_get_contents($this->file);
@@ -110,5 +111,6 @@
             }
         }
     }
+    */
     
 ?>
