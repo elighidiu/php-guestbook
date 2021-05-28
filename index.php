@@ -89,7 +89,8 @@ if(isset($_POST["submit"])){
     </form>
 
     <?php 
-         $inp = file_get_contents("messages.json");
+    // I have changed the code below into OOP 
+       /*  $inp = file_get_contents("messages.json");
          $tempArray = json_decode($inp);
 
          foreach($tempArray as $message){
@@ -99,6 +100,11 @@ if(isset($_POST["submit"])){
              echo "</br>" .$message->author;
              echo "<hr>";
          }
+         */ 
+
+        $guestbook = new Guestbook;
+        $guestbook->showMessages();
+        
     ?>
 
     <?php require ("view/footer.php") ?>

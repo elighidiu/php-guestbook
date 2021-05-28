@@ -1,5 +1,5 @@
 <?php
-    class userValidator implements \JsonSerializable {
+    class userValidator implements \JsonSerializable { //need to implement JsonSerializable otherwise becasue the properties are private the messages will not be added in the json file. Will only add empty arrays
         private $title; 
         private $date;
         private $content;
@@ -92,6 +92,23 @@
         }
 
 
+    }
+
+    class Guestbook{
+        public $file="messages.json";
+        public array $content;
+
+        public function showMessages(){
+            $inp = file_get_contents($this->file);
+            $tempArray = json_decode($inp);
+            foreach(array_slice(array_reverse($tempArray), 0, 19) as $message){
+                echo "</br>" .$message->title;
+                echo "</br>" .$message->date;            
+                echo "</br>" .$message->content;            
+                echo "</br>" .$message->author;
+                echo "<hr>";
+            }
+        }
     }
     
 ?>
