@@ -13,6 +13,24 @@
         - Author name
 
 -->
+<?php
+
+require "include/formvalidator.php";
+
+if(isset($_POST["submit"])){
+    $test = new userValidator($_POST["title"], $_POST["date"], $_POST["content"], $_POST["author"]);
+
+   // var_dump($test);
+    $test->validateAll();
+    var_dump($test->getErrors());
+    var_dump($test->getTitle());
+    var_dump($test->getDate());
+    var_dump($test->getContent());
+    var_dump($test->getAuthor());
+
+}
+?>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -24,7 +42,11 @@
 <body>
     <?php require ("view/header.php") ?>
 
-    <form method="POST"> 
+    <!-- 
+        The $_SERVER["PHP_SELF"] sends the submitted form data to the page itself, instead of jumping to a different page. This way, the user will get error messages on the same page as the form.
+        The htmlspecialchars() function converts special characters to HTML entities. This means that it will replace HTML characters like < and > with &lt; and &gt;. This prevents attackers from exploiting the code by injecting HTML or Javascript code (Cross-site Scripting attacks) in forms.
+     -->
+    <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>"> 
         <div class="form-row">
             <div class="form-group">
                 <label for="title">Title:</label>
@@ -53,8 +75,9 @@
             </div>
         </div>
             
-        <button type="submit" class="btn" name="submit">Post message!</button>
+        <button type="submit" class="btn" name="submit" value="append">Post message!</button>
     </form>
+
 
     <?php require ("view/footer.php") ?>
 </body>
